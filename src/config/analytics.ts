@@ -5,7 +5,15 @@ export const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID || '';
 
 // Initialize Google Analytics
 export const initGA = () => {
-  if (!GA_MEASUREMENT_ID || typeof window === 'undefined') return;
+  if (typeof window === 'undefined') return;
+  
+  // Debug: Log GA Measurement ID (remove in production if needed)
+  if (!GA_MEASUREMENT_ID) {
+    console.warn('Google Analytics: VITE_GA_MEASUREMENT_ID is not set. Analytics will not work.');
+    return;
+  }
+  
+  console.log('Google Analytics: Initializing with ID:', GA_MEASUREMENT_ID);
 
   // Load gtag script
   const script1 = document.createElement('script');
