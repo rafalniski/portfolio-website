@@ -22,42 +22,50 @@ export default function Pricing() {
   useEffect(() => {
     const fetchPricingData = async () => {
       try {
-        const geoResponse = await fetch('https://ipapi.co/json/', {
+        // Use ip-api.com which supports CORS (free tier: 45 requests/minute)
+        const geoResponse = await fetch('https://ip-api.com/json/?fields=countryCode,country', {
           method: 'GET'
         });
-        const geoData = await geoResponse.json();
-        const country = geoData.country_code;
-        const isEU = isEUCountry(country);
+        
+        if (geoResponse.ok) {
+          const geoData = await geoResponse.json();
+          const country = geoData.countryCode;
+          const isEU = isEUCountry(country);
 
-        let currency = 'USD';
-        let conversionRate = 1;
+          let currency = 'USD';
+          let conversionRate = 1;
 
-        if (isEU) {
-          currency = 'EUR';
-          try {
-            const rateResponse = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-            const rateData = await rateResponse.json();
-            conversionRate = rateData.rates.EUR || 0.92;
-          } catch {
-            conversionRate = 0.92;
+          if (isEU) {
+            currency = 'EUR';
+            try {
+              const rateResponse = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+              const rateData = await rateResponse.json();
+              conversionRate = rateData.rates.EUR || 0.92;
+            } catch {
+              conversionRate = 0.92;
+            }
           }
-        }
 
-        setPricing({
-          currency,
-          rate: conversionRate,
-          country: geoData.country_name || geoData.country_code || null,
-          loading: false,
-        });
+          setPricing({
+            currency,
+            rate: conversionRate,
+            country: geoData.country || geoData.countryCode || null,
+            loading: false,
+          });
+          return;
+        }
       } catch (error) {
-        console.error('Error fetching pricing data:', error);
-        setPricing({
-          currency: 'USD',
-          rate: 1,
-          country: null,
-          loading: false,
-        });
+        // Silently fail - use default values
+        console.debug('Pricing geolocation not available, using defaults');
       }
+
+      // Default: USD
+      setPricing({
+        currency: 'USD',
+        rate: 1,
+        country: null,
+        loading: false,
+      });
     };
 
     fetchPricingData();

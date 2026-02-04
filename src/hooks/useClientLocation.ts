@@ -16,27 +16,37 @@ export function useClientLocation(): LocationData {
   useEffect(() => {
     const fetchLocation = async () => {
       try {
-        const response = await fetch('https://ipapi.co/json/', {
-          method: 'GET'
+        // Use ip-api.com which supports CORS (free tier: 45 requests/minute)
+        const response = await fetch('https://ip-api.com/json/?fields=countryCode', {
+          method: 'GET',
         });
-        const data = await response.json();
-        const countryCode = data.country_code;
 
-        const usCountries = ['US', 'CA', 'MX']; // US, Canada, Mexico
+        if (response.ok) {
+          const data = await response.json();
+          const countryCode = data.countryCode;
 
-        setLocation({
-          countryCode,
-          isUS: usCountries.includes(countryCode),
-          loading: false,
-        });
+          if (countryCode) {
+            const usCountries = ['US', 'CA', 'MX']; // US, Canada, Mexico
+
+            setLocation({
+              countryCode,
+              isUS: usCountries.includes(countryCode),
+              loading: false,
+            });
+            return;
+          }
+        }
       } catch (error) {
-        console.error('Error fetching location:', error);
-        setLocation({
-          countryCode: null,
-          isUS: false,
-          loading: false,
-        });
+        // Silently fail - use default values
+        console.debug('Geolocation not available, using defaults');
       }
+
+      // Default: assume non-US (shows CET)
+      setLocation({
+        countryCode: null,
+        isUS: false,
+        loading: false,
+      });
     };
 
     fetchLocation();
