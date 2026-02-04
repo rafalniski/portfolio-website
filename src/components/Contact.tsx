@@ -1,4 +1,5 @@
-import { Mail, MessageCircle, Github, Linkedin, Briefcase } from 'lucide-react';
+import { useState } from 'react';
+import { Mail, MessageCircle, Github, Linkedin, Briefcase, Check } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { CONTACT_INFO, SOCIAL_LINKS } from '../config/constants';
 import { trackContactMethod, trackExternalLink } from '../config/analytics';
@@ -6,7 +7,34 @@ import ContactForm from './ContactForm';
 
 export default function Contact() {
   const { theme } = useTheme();
+  const [emailCopied, setEmailCopied] = useState(false);
   const whatsappUrl = `https://wa.me/${CONTACT_INFO.whatsapp.replace(/\D/g, '')}?text=Hi%20Rafal,%20I%20am%20interested%20in%20discussing%20an%20Android%20development%20project`;
+
+  const handleEmailClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    // Copy email to clipboard
+    try {
+      await navigator.clipboard.writeText(CONTACT_INFO.email);
+      setEmailCopied(true);
+      
+      // Track the action
+      trackContactMethod('Email');
+      
+      // Reset the copied state after 3 seconds
+      setTimeout(() => {
+        setEmailCopied(false);
+      }, 3000);
+      
+      // Open mailto link
+      window.location.href = `mailto:${CONTACT_INFO.email}`;
+    } catch (error) {
+      console.error('Failed to copy email:', error);
+      // Fallback: just open mailto
+      trackContactMethod('Email');
+      window.location.href = `mailto:${CONTACT_INFO.email}`;
+    }
+  };
 
   return (
     <section id="contact" className={`py-20 px-4 sm:px-6 lg:px-8 transition-colors duration-300 ${
@@ -27,15 +55,24 @@ export default function Contact() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-6 mb-12">
-            <a
-            href={`mailto:${CONTACT_INFO.email}`}
-            onClick={() => trackContactMethod('Email')}
-            className={`group rounded-3xl p-8 border-2 hover:shadow-2xl hover:shadow-orange-400/20 transition-all transform hover:-translate-y-2 cursor-pointer ${
+            <div
+            onClick={handleEmailClick}
+            className={`group rounded-3xl p-8 border-2 hover:shadow-2xl hover:shadow-orange-400/20 transition-all transform hover:-translate-y-2 cursor-pointer relative ${
               theme === 'light'
                 ? 'bg-white border-orange-200 hover:border-orange-400'
                 : 'bg-gray-700 border-orange-800 hover:border-orange-700'
             }`}
           >
+            {emailCopied && (
+              <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-medium flex items-center gap-2 ${
+                theme === 'light'
+                  ? 'bg-green-100 text-green-700'
+                  : 'bg-green-900/50 text-green-400'
+              }`}>
+                <Check className="w-4 h-4" />
+                Copied!
+              </div>
+            )}
             <div className="flex items-start gap-4">
               <div className={`p-3 rounded-full group-hover:opacity-75 transition ${
                 theme === 'light'
@@ -60,7 +97,7 @@ export default function Contact() {
                 }`}>{CONTACT_INFO.email}</p>
               </div>
             </div>
-          </a>
+          </div>
 
           <a
             href={whatsappUrl}
