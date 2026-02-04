@@ -2,17 +2,13 @@ import { Check } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { CONTACT_INFO, PROFESSIONAL_INFO } from '../config/constants';
 import { trackCTA } from '../config/analytics';
-import { useClientLocation } from '../hooks/useClientLocation';
 
 export default function Hero() {
   const { theme } = useTheme();
-  const { isUS, loading: locationLoading } = useClientLocation();
 
-  // Determine timezone message based on client location
+  // Determine timezone message
   const getTimezoneMessage = () => {
-    if (locationLoading) return CONTACT_INFO.timezone;
-    if (isUS) return 'Available EST hours';
-    return 'Available CET'; // Rest of the world
+    return 'Available CET and EST';
   };
 
   return (

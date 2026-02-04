@@ -3,14 +3,13 @@ import { ChevronDown } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { CONTACT_INFO } from '../config/constants';
 import { trackCTA } from '../config/analytics';
-import { useClientLocation } from '../hooks/useClientLocation';
 
 interface FAQItem {
   question: string;
   answer: string | React.ReactNode;
 }
 
-const getFAQs = (isUSClient: boolean): FAQItem[] => [
+const getFAQs = (): FAQItem[] => [
   {
     question: "What's included in your hourly rate?",
     answer: "My rate includes expert-level Android development, code reviews, technical documentation, regular progress updates, and ongoing support during the project. I deliver production-ready, maintainable code following best practices and industry standards."
@@ -29,9 +28,7 @@ const getFAQs = (isUSClient: boolean): FAQItem[] => [
   },
   {
     question: "What timezone are you in?",
-    answer: isUSClient
-      ? `I'm based in CET (Central European Time) but available also in EST. I'm flexible with working hours and can accommodate different timezones for meetings and collaboration. I typically respond to messages within ${CONTACT_INFO.responseTime.toLowerCase()}.`
-      : `I'm based in CET (Central European Time). I'm flexible with working hours and can accommodate different timezones for meetings and collaboration. I typically respond to messages within ${CONTACT_INFO.responseTime.toLowerCase()}.`
+    answer: `I'm based in CET (Central European Time) but available also in EST. I'm flexible with working hours and can accommodate different timezones for meetings and collaboration. I typically respond to messages within ${CONTACT_INFO.responseTime.toLowerCase()}.`
   },
   {
     question: "Do you provide ongoing support after project completion?",
@@ -61,16 +58,13 @@ const getFAQs = (isUSClient: boolean): FAQItem[] => [
 
 export default function FAQ() {
   const { theme } = useTheme();
-  const { isUS, loading: locationLoading } = useClientLocation();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const getTimezoneMessage = () => {
-    if (locationLoading) return 'available CET';
-    if (isUS) return 'available EST hours';
-    return 'available CET'; // Rest of the world
+    return 'available CET and EST';
   };
 
-  const faqs = getFAQs(isUS).map(faq => {
+  const faqs = getFAQs().map(faq => {
     // Replace placeholder with actual JSX link for expertise section
     if (faq.answer === "EXPERTISE_LINK_PLACEHOLDER") {
       return {

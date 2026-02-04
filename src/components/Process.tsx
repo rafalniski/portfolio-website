@@ -1,7 +1,6 @@
 import { MessageSquare, Code, CheckCircle, Rocket } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { CONTACT_INFO } from '../config/constants';
-import { useClientLocation } from '../hooks/useClientLocation';
 
 interface ProcessStep {
   icon: React.ReactNode;
@@ -11,12 +10,9 @@ interface ProcessStep {
 
 export default function Process() {
   const { theme } = useTheme();
-  const { isUS, loading: locationLoading } = useClientLocation();
 
   const getTimezoneMessage = () => {
-    if (locationLoading) return CONTACT_INFO.timezone;
-    if (isUS) return 'EST';
-    return 'CET'; // Rest of the world
+    return 'CET and EST';
   };
 
   const steps: ProcessStep[] = [
@@ -126,7 +122,7 @@ export default function Process() {
               <strong>Flexible Collaboration:</strong> I adapt to your team's workflow - whether you use Jira, Trello, GitHub Issues, or prefer email updates.
             </p>
             <p>
-              <strong>Quick Response:</strong> I'm available {CONTACT_INFO.timezone} and typically respond within {CONTACT_INFO.responseTime.toLowerCase()} to questions and requests.
+              <strong>Quick Response:</strong> I'm available CET and EST and typically respond within {CONTACT_INFO.responseTime.toLowerCase()} to questions and requests.
             </p>
           </div>
         </div>
