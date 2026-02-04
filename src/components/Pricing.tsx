@@ -20,55 +20,15 @@ export default function Pricing() {
   });
 
   useEffect(() => {
-    const fetchPricingData = async () => {
-      try {
-        // Use reallyfreegeoip.org (no API key, no rate limits, CORS enabled)
-        const geoResponse = await fetch('https://reallyfreegeoip.org/json/', {
-          method: 'GET'
-        });
-        
-        if (geoResponse.ok) {
-          const geoData = await geoResponse.json();
-          const country = geoData.country_code;
-          const isEU = isEUCountry(country);
-
-          let currency = 'USD';
-          let conversionRate = 1;
-
-          if (isEU) {
-            currency = 'EUR';
-            try {
-              const rateResponse = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-              const rateData = await rateResponse.json();
-              conversionRate = rateData.rates.EUR || 0.92;
-            } catch {
-              conversionRate = 0.92;
-            }
-          }
-
-          setPricing({
-            currency,
-            rate: conversionRate,
-            country: geoData.country_name || geoData.country_code || null,
-            loading: false,
-          });
-          return;
-        }
-      } catch (error) {
-        // Silently fail - use default values
-        console.debug('Pricing geolocation not available, using defaults');
-      }
-
-      // Default: USD
-      setPricing({
-        currency: 'USD',
-        rate: 1,
-        country: null,
-        loading: false,
-      });
-    };
-
-    fetchPricingData();
+    // Geolocation disabled due to CORS issues with free APIs
+    // Default: USD pricing
+    // Users can manually select currency if needed in the future
+    setPricing({
+      currency: 'USD',
+      rate: 1,
+      country: null,
+      loading: false,
+    });
   }, []);
 
   const isEUCountry = (countryCode: string): boolean => {
