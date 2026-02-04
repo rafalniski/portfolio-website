@@ -8,13 +8,29 @@ export const GA_MEASUREMENT_ID = 'G-FRMQCJ4LLV';
 export const initGA = () => {
   if (typeof window === 'undefined') return;
   
-  // gtag is already initialized in index.html, so we just ensure it's available
-  if (!(window as any).gtag) {
-    console.warn('Google Analytics: gtag is not available. Make sure GA4 tag is in index.html');
-    return;
-  }
-  
-  console.log('Google Analytics: Ready for custom event tracking');
+  // Wait a bit for gtag to load (since script is async)
+  setTimeout(() => {
+    if (!(window as any).gtag) {
+      console.error('Google Analytics: gtag is not available. Make sure GA4 tag is in index.html');
+      console.error('dataLayer:', (window as any).dataLayer);
+      return;
+    }
+    
+    console.log('✓ Google Analytics: gtag is available and ready');
+    console.log('✓ Measurement ID:', GA_MEASUREMENT_ID);
+    console.log('✓ dataLayer:', (window as any).dataLayer);
+    
+    // Send a test event to verify it works
+    try {
+      (window as any).gtag('event', 'page_view_test', {
+        event_category: 'debug',
+        event_label: 'GA initialization test'
+      });
+      console.log('✓ Test event sent successfully');
+    } catch (error) {
+      console.error('✗ Error sending test event:', error);
+    }
+  }, 100);
 };
 
 // Track page views
