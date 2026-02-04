@@ -63,16 +63,6 @@ export default function Contact() {
                 : 'bg-gray-700 border-orange-800 hover:border-orange-700'
             }`}
           >
-            {emailCopied && (
-              <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-medium flex items-center gap-2 ${
-                theme === 'light'
-                  ? 'bg-green-100 text-green-700'
-                  : 'bg-green-900/50 text-green-400'
-              }`}>
-                <Check className="w-4 h-4" />
-                Copied!
-              </div>
-            )}
             <div className="flex items-start gap-4">
               <div className={`p-3 rounded-full group-hover:opacity-75 transition ${
                 theme === 'light'
@@ -95,6 +85,16 @@ export default function Contact() {
                 <p className={`font-semibold hover:opacity-75 transition-all ${
                   theme === 'light' ? 'text-orange-600 hover:text-orange-700' : 'text-orange-400 hover:text-orange-300'
                 }`}>{CONTACT_INFO.email}</p>
+                {emailCopied && (
+                  <div className={`mt-3 px-3 py-1 rounded-full text-sm font-medium flex items-center gap-2 w-fit ${
+                    theme === 'light'
+                      ? 'bg-green-100 text-green-700'
+                      : 'bg-green-900/50 text-green-400'
+                  }`}>
+                    <Check className="w-4 h-4" />
+                    Copied!
+                  </div>
+                )}
               </div>
             </div>
           </div>
