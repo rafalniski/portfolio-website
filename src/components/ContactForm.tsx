@@ -30,9 +30,11 @@ export default function ContactForm() {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
-    // Create mailto link with form data
-    const subject = encodeURIComponent(`Project Inquiry: ${formData.projectType || 'Android Development'}`);
-    const body = encodeURIComponent(`
+    try {
+      // Format email body
+      const emailBody = `
+New Project Inquiry from Portfolio Website
+
 Name: ${formData.name}
 Email: ${formData.email}
 Company: ${formData.company || 'Not provided'}
@@ -42,28 +44,55 @@ Timeline: ${formData.timeline || 'Not specified'}
 
 Message:
 ${formData.message}
-    `);
 
-    // Track form submission
-    trackFormSubmission('Contact Form');
+---
+This email was sent from the contact form on rafalniski.dev
+      `.trim();
 
-    // Open email client
-    window.location.href = `mailto:${CONTACT_INFO.email}?subject=${subject}&body=${body}`;
-
-    // Simulate form submission (in real app, you'd send to backend)
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitStatus('success');
-      setFormData({
-        name: '',
-        email: '',
-        company: '',
-        projectType: '',
-        budget: '',
-        timeline: '',
-        message: ''
+      // Send email using Formspree or Cloudflare Pages Function
+      // Replace YOUR_FORMSPREE_ID with your Formspree form ID after setup
+      const response = await fetch('https://formspree.io/f/YOUR_FORMSPREE_ID', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          _subject: `Project Inquiry: ${formData.projectType || 'Android Development'}`,
+          _replyto: formData.email,
+          name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          projectType: formData.projectType,
+          budget: formData.budget,
+          timeline: formData.timeline,
+          message: formData.message,
+          _format: 'plain',
+        }),
       });
-    }, 1000);
+
+      if (response.ok) {
+        // Track form submission
+        trackFormSubmission('Contact Form');
+        
+        setSubmitStatus('success');
+        setFormData({
+          name: '',
+          email: '',
+          company: '',
+          projectType: '',
+          budget: '',
+          timeline: '',
+          message: ''
+        });
+      } else {
+        throw new Error('Failed to send message');
+      }
+    } catch (error) {
+      console.error('Error sending form:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -254,7 +283,15 @@ ${formData.message}
           <div className={`p-4 rounded-lg ${
             theme === 'light' ? 'bg-green-50 text-green-700' : 'bg-green-900/30 text-green-400'
           }`}>
-            Thank you! Your email client should open. If not, please email me directly at {CONTACT_INFO.email}
+            ✓ Thank you! Your message has been sent successfully. I'll get back to you within {CONTACT_INFO.responseTime.toLowerCase()}.
+          </div>
+        )}
+
+        {submitStatus === 'error' && (
+          <div className={`p-4 rounded-lg ${
+            theme === 'light' ? 'bg-red-50 text-red-700' : 'bg-red-900/30 text-red-400'
+          }`}>
+            ✗ Sorry, there was an error sending your message. Please try again or email me directly at {CONTACT_INFO.email}
           </div>
         )}
 
