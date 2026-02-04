@@ -1,41 +1,25 @@
 // Google Analytics 4 Configuration
-// Replace 'G-XXXXXXXXXX' with your actual GA4 Measurement ID
+// GA4 is initialized directly in index.html via gtag.js
+// This file provides helper functions for custom event tracking
 
-export const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID || '';
+export const GA_MEASUREMENT_ID = 'G-FRMQCJ4LLV';
 
-// Initialize Google Analytics
+// Initialize Google Analytics (gtag is already loaded from index.html)
 export const initGA = () => {
   if (typeof window === 'undefined') return;
   
-  // Debug: Log GA Measurement ID (remove in production if needed)
-  if (!GA_MEASUREMENT_ID) {
-    console.warn('Google Analytics: VITE_GA_MEASUREMENT_ID is not set. Analytics will not work.');
+  // gtag is already initialized in index.html, so we just ensure it's available
+  if (!(window as any).gtag) {
+    console.warn('Google Analytics: gtag is not available. Make sure GA4 tag is in index.html');
     return;
   }
   
-  console.log('Google Analytics: Initializing with ID:', GA_MEASUREMENT_ID);
-
-  // Load gtag script
-  const script1 = document.createElement('script');
-  script1.async = true;
-  script1.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
-  document.head.appendChild(script1);
-
-  // Initialize gtag
-  window.dataLayer = window.dataLayer || [];
-  function gtag(...args: any[]) {
-    window.dataLayer.push(args);
-  }
-  (window as any).gtag = gtag;
-  gtag('js', new Date());
-  gtag('config', GA_MEASUREMENT_ID, {
-    page_path: window.location.pathname,
-  });
+  console.log('Google Analytics: Ready for custom event tracking');
 };
 
 // Track page views
 export const trackPageView = (path: string) => {
-  if (!GA_MEASUREMENT_ID || typeof window === 'undefined' || !(window as any).gtag) return;
+  if (typeof window === 'undefined' || !(window as any).gtag) return;
   
   (window as any).gtag('config', GA_MEASUREMENT_ID, {
     page_path: path,
@@ -49,7 +33,7 @@ export const trackEvent = (
   eventLabel?: string,
   value?: number
 ) => {
-  if (!GA_MEASUREMENT_ID || typeof window === 'undefined' || !(window as any).gtag) return;
+  if (typeof window === 'undefined' || !(window as any).gtag) return;
 
   (window as any).gtag('event', eventName, {
     event_category: eventCategory,
