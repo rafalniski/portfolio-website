@@ -8,7 +8,9 @@ import ContactForm from './ContactForm';
 export default function Contact() {
   const { theme } = useTheme();
   const [emailCopied, setEmailCopied] = useState(false);
-  const whatsappUrl = `https://wa.me/${CONTACT_INFO.whatsapp.replace(/\D/g, '')}?text=Hi%20Rafal,%20I%20am%20interested%20in%20discussing%20an%20Android%20development%20project`;
+  // Format WhatsApp number: remove + and spaces, keep only digits
+  const whatsappNumber = CONTACT_INFO.whatsapp.replace(/[^\d]/g, '');
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=Hi%20Rafal,%20I%20am%20interested%20in%20discussing%20an%20Android%20development%20project`;
 
   const handleEmailClick = async (e: React.MouseEvent) => {
     e.preventDefault();
