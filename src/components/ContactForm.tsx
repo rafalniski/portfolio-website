@@ -49,9 +49,8 @@ ${formData.message}
 This email was sent from the contact form on rafalniski.dev
       `.trim();
 
-      // Send email using Formspree or Cloudflare Pages Function
-      // Replace YOUR_FORMSPREE_ID with your Formspree form ID after setup
-      const response = await fetch('https://formspree.io/f/YOUR_FORMSPREE_ID', {
+      // Send email using Formspree
+      const response = await fetch('https://formspree.io/f/mwvqgjaw', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
