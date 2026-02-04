@@ -63,7 +63,7 @@ export default function Hero() {
           theme === 'light' ? 'text-gray-700' : 'text-gray-300'
         }`}>
           I help companies build enterprise-grade Android applications that serve millions of users. 
-          Specialized in Clean Architecture, Jetpack Compose, and real-time systems. 
+          Specialized in Kotlin, Clean Architecture, Jetpack Compose, and real-time systems. 
           Lead architect on apps for Volvo Cars, TravelBank, and other leading brands.
         </p>
 

@@ -42,7 +42,7 @@ export default function About() {
             <p className={`text-lg mb-6 leading-relaxed transition-colors ${
               theme === 'light' ? 'text-gray-700' : 'text-gray-300'
             }`}>
-              I specialize in Clean Architecture, Jetpack Compose, and real-time systems. 
+              I specialize in Kotlin, Clean Architecture, Jetpack Compose, and real-time systems. 
               What sets me apart is my ability to bridge the gap between technical excellence 
               and business objectives. I don't just write code - I architect solutions that scale, 
               perform, and deliver measurable business value.
