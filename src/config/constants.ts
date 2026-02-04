@@ -6,7 +6,7 @@ export const SOCIAL_LINKS = {
 };
 
 export const CONTACT_INFO = {
-  email: 'rafalniski@gmail.com',
+  email: 'contact@rafalniski.dev',
   phone: '+48 605 271 242',
   whatsapp: '0048605271242',
   timezone: 'CET (Central European Time)',

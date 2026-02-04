@@ -44,7 +44,7 @@ export default function About() {
             }`}>
               I specialize in Clean Architecture, Jetpack Compose, and real-time systems. 
               What sets me apart is my ability to bridge the gap between technical excellence 
-              and business objectives. I don't just write code—I architect solutions that scale, 
+              and business objectives. I don't just write code - I architect solutions that scale, 
               perform, and deliver measurable business value.
             </p>
 

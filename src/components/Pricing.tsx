@@ -6,7 +6,7 @@ import { trackCTA } from '../config/analytics';
 interface PricingState {
   currency: string;
   rate: number;
-  country: string;
+  country: string | null;
   loading: boolean;
 }
 
@@ -15,7 +15,7 @@ export default function Pricing() {
   const [pricing, setPricing] = useState<PricingState>({
     currency: 'USD',
     rate: 1,
-    country: 'Unknown',
+    country: null,
     loading: true,
   });
 
@@ -46,7 +46,7 @@ export default function Pricing() {
         setPricing({
           currency,
           rate: conversionRate,
-          country: geoData.country_name || 'Unknown',
+          country: geoData.country_name || geoData.country_code || null,
           loading: false,
         });
       } catch (error) {
@@ -54,7 +54,7 @@ export default function Pricing() {
         setPricing({
           currency: 'USD',
           rate: 1,
-          country: 'Unknown',
+          country: null,
           loading: false,
         });
       }
@@ -104,7 +104,7 @@ export default function Pricing() {
             <div className="mb-6">
               <p className={`text-sm mb-2 font-medium transition-colors ${
                 theme === 'light' ? 'text-gray-700' : 'text-gray-300'
-              }`}>Your Rate</p>
+              }`}>My Rate</p>
               <div className="flex items-baseline gap-2">
                 <span className={`text-5xl font-bold transition-colors ${
                   theme === 'light' ? 'text-gray-900' : 'text-white'
@@ -118,18 +118,6 @@ export default function Pricing() {
               }`}>per hour</p>
             </div>
 
-            <div className={`border-t pt-6 mb-6 transition-colors ${
-              theme === 'light' ? 'border-orange-100' : 'border-orange-900'
-            }`}>
-              <p className={`text-sm mb-4 flex items-center gap-2 font-medium transition-colors ${
-                theme === 'light' ? 'text-gray-700' : 'text-gray-300'
-              }`}>
-                <MapPin className={`w-4 h-4 transition-colors ${
-                  theme === 'light' ? 'text-orange-600' : 'text-orange-500'
-                }`} />
-                {pricing.loading ? 'Detecting location...' : `${pricing.country} (${pricing.currency})`}
-              </p>
-            </div>
 
             <div className="space-y-3">
               <div className="flex items-start gap-3">

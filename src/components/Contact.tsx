@@ -100,8 +100,8 @@ export default function Contact() {
           </a>
 
           <a
-            href="https://www.toptal.com/developers/resume/rafal-niski#NW1Erq"
-            onClick={() => trackExternalLink('Toptal', 'https://www.toptal.com/developers/resume/rafal-niski')}
+            href="https://toptal.com/resume/rafal-niski/NW1Erq/worlds-top-talent"
+            onClick={() => trackExternalLink('Toptal', 'https://toptal.com/resume/rafal-niski/NW1Erq/worlds-top-talent')}
             target="_blank"
             rel="noopener noreferrer"
             className={`group rounded-3xl p-8 border-2 hover:shadow-2xl hover:shadow-blue-400/20 transition-all transform hover:-translate-y-2 cursor-pointer ${
@@ -123,15 +123,17 @@ export default function Contact() {
               <div className="flex-1 min-w-0">
                 <h3 className={`text-xl font-semibold mb-2 transition-colors ${
                   theme === 'light' ? 'text-gray-900' : 'text-white'
-                }`}>Toptal</h3>
+                }`}>Toptal Network</h3>
                 <p className={`mb-3 text-sm transition-colors ${
                   theme === 'light' ? 'text-gray-700' : 'text-gray-300'
                 }`}>
-                  Hire through our network of vetted professionals
+                  Hire me through Toptal's professional network.
                 </p>
-                <p className={`font-semibold hover:opacity-75 transition-all break-words ${
+                <p className={`font-semibold hover:opacity-75 transition-all break-words text-sm ${
                   theme === 'light' ? 'text-blue-600 hover:text-blue-700' : 'text-blue-400 hover:text-blue-300'
-                }`}>www.toptal.com/resume/rafal-niski</p>
+                }`}>
+                  https://toptal.com/resume/rafal-niski
+                </p>
               </div>
             </div>
           </a>

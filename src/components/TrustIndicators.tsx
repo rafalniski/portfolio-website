@@ -18,8 +18,8 @@ export default function TrustIndicators() {
     },
     {
       icon: <CheckCircle className="w-6 h-6" />,
-      value: PROFESSIONAL_INFO.totalUsers,
-      label: 'Users Served'
+      value: 'Top 3%',
+      label: 'Vetted by Toptal'
     },
     {
       icon: <Clock className="w-6 h-6" />,

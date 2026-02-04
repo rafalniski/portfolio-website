@@ -1,6 +1,7 @@
 import { MessageSquare, Code, CheckCircle, Rocket } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { CONTACT_INFO } from '../config/constants';
+import { useClientLocation } from '../hooks/useClientLocation';
 
 interface ProcessStep {
   icon: React.ReactNode;
@@ -10,6 +11,13 @@ interface ProcessStep {
 
 export default function Process() {
   const { theme } = useTheme();
+  const { isUS, loading: locationLoading } = useClientLocation();
+
+  const getTimezoneMessage = () => {
+    if (locationLoading) return CONTACT_INFO.timezone;
+    if (isUS) return 'EST';
+    return 'CET'; // Rest of the world
+  };
 
   const steps: ProcessStep[] = [
     {
@@ -25,7 +33,7 @@ export default function Process() {
     {
       icon: <CheckCircle className="w-8 h-8" />,
       title: "Development & Updates",
-      description: `I work in sprints with regular updates (typically daily summaries and weekly reviews). Code is delivered incrementally with reviews and testing. I'm available ${CONTACT_INFO.timezone} and respond within ${CONTACT_INFO.responseTime.toLowerCase()}.`
+      description: `I work in sprints with regular updates (typically daily summaries and weekly reviews). Code is delivered incrementally with reviews and testing. I'm available ${getTimezoneMessage()} and respond within ${CONTACT_INFO.responseTime.toLowerCase()}.`
     },
     {
       icon: <Rocket className="w-8 h-8" />,
@@ -115,7 +123,7 @@ export default function Process() {
               <strong>Transparent Process:</strong> All code is version-controlled, documented, and reviewed. You have full visibility into the development process.
             </p>
             <p>
-              <strong>Flexible Collaboration:</strong> I adapt to your team's workflow—whether you use Jira, Trello, GitHub Issues, or prefer email updates.
+              <strong>Flexible Collaboration:</strong> I adapt to your team's workflow - whether you use Jira, Trello, GitHub Issues, or prefer email updates.
             </p>
             <p>
               <strong>Quick Response:</strong> I'm available {CONTACT_INFO.timezone} and typically respond within {CONTACT_INFO.responseTime.toLowerCase()} to questions and requests.

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ExternalLink, Star, ChevronDown, TrendingUp, Users, Clock, Award } from 'lucide-react';
+import { ExternalLink, ChevronDown, TrendingUp, Users, Clock, Award } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
 interface Metric {
@@ -13,8 +13,6 @@ interface App {
   name: string;
   description: string;
   technologies: string[];
-  rating: number;
-  downloads: string;
   playStoreUrl?: string;
   features: string[];
   screenshot: string;
@@ -32,19 +30,17 @@ const apps: App[] = [
     name: "Volvo Cars",
     description: "Large-scale consumer app for managing and interacting with Volvo vehicles globally. Multi-module Clean Architecture with real-time features serving millions of users.",
     technologies: ["Kotlin", "Jetpack Compose", "Clean Architecture", "Coroutines", "gRPC"],
-    rating: 4.8,
-    downloads: "1M+",
     features: ["Real-time chat", "Roadside assistance", "EV charging", "Smart home integration"],
     playStoreUrl: "https://play.google.com/store/apps/details?id=se.volvo.vcc&hl=en",
-    screenshot: "/assets/images/volvo-cars.webp",
+    screenshot: "/assets/images/volvo-cars.png",
     color: "orange",
     role: "Lead Android Architect",
     teamSize: "8 developers",
     timeline: "18 months",
     metrics: [
-      { label: "Crash Rate Reduction", value: "65%", icon: <TrendingUp className="w-4 h-4" /> },
-      { label: "Performance Improvement", value: "40%", icon: <TrendingUp className="w-4 h-4" /> },
-      { label: "User Satisfaction", value: "4.8/5", icon: <Award className="w-4 h-4" /> }
+      { label: "Architecture", value: "Multi-module Clean Architecture", icon: <Award className="w-4 h-4" /> },
+      { label: "Real-time Features", value: "gRPC vehicle communication", icon: <TrendingUp className="w-4 h-4" /> },
+      { label: "Scale", value: "Millions of users", icon: <Users className="w-4 h-4" /> }
     ],
     challenges: [
       "Architected multi-module Clean Architecture supporting 10+ feature modules",
@@ -56,27 +52,25 @@ const apps: App[] = [
   {
     id: 2,
     name: "TravelBank",
-    description: "Expense app powered by budgets for tracking business expenses and flight booking. Handles receipt capture and reimbursement workflows.",
+    description: "Business travel management app for booking trips, managing itineraries, and tracking expenses. Features trip planning, hotel check-ins, flight management, and rental car bookings.",
     technologies: ["Kotlin", "MVVM", "REST API", "Room Database"],
-    rating: 4.7,
-    downloads: "500K+",
-    features: ["Receipt scanning", "Flight booking", "Budget tracking", "Reimbursement"],
+    features: ["Trip planning", "Hotel check-ins", "Flight management", "Rental car bookings"],
     playStoreUrl: "https://play.google.com/store/apps/details?id=com.travelbank.app",
-    screenshot: "/assets/images/travelbank.webp",
+    screenshot: "/assets/images/travelbank.png",
     color: "amber",
     role: "Senior Android Developer",
     teamSize: "4 developers",
     timeline: "12 months",
     metrics: [
-      { label: "Receipt Processing", value: "95% accuracy", icon: <TrendingUp className="w-4 h-4" /> },
-      { label: "App Performance", value: "35% faster", icon: <TrendingUp className="w-4 h-4" /> },
-      { label: "User Retention", value: "+28%", icon: <TrendingUp className="w-4 h-4" /> }
+      { label: "Trip Management", value: "End-to-end travel workflows", icon: <Award className="w-4 h-4" /> },
+      { label: "Integration", value: "Flight & hotel APIs", icon: <TrendingUp className="w-4 h-4" /> },
+      { label: "Offline Support", value: "Room database sync", icon: <Clock className="w-4 h-4" /> }
     ],
     challenges: [
-      "Built ML-powered receipt scanning with 95% accuracy",
-      "Designed offline-first architecture with Room database sync",
-      "Integrated complex flight booking API with real-time pricing",
-      "Implemented secure payment flows with PCI compliance"
+      "Built comprehensive trip management with itinerary tracking",
+      "Designed hotel check-in workflows with location services",
+      "Integrated flight and rental car booking APIs",
+      "Implemented offline-first architecture with Room database sync"
     ]
   },
   {
@@ -84,19 +78,17 @@ const apps: App[] = [
     name: "Amber",
     description: "Loyalty app enabling users to earn and redeem points with world-class brands. RTL language support with seamless REST API integration.",
     technologies: ["Kotlin", "Material Design", "REST API", "RTL Support"],
-    rating: 4.9,
-    downloads: "300K+",
     features: ["Point tracking", "Brand integration", "RTL support", "Payment processing"],
     playStoreUrl: "https://play.google.com/store/apps/details?id=com.amber.amber",
-    screenshot: "/assets/images/amber.webp",
+    screenshot: "/assets/images/amber.png",
     color: "red",
     role: "Lead Android Developer",
     teamSize: "3 developers",
     timeline: "10 months",
     metrics: [
-      { label: "RTL Support", value: "12 languages", icon: <Users className="w-4 h-4" /> },
-      { label: "API Response Time", value: "<200ms", icon: <TrendingUp className="w-4 h-4" /> },
-      { label: "Payment Success Rate", value: "99.2%", icon: <Award className="w-4 h-4" /> }
+      { label: "RTL Support", value: "Multi-language support", icon: <Users className="w-4 h-4" /> },
+      { label: "Integration", value: "50+ brand partners", icon: <TrendingUp className="w-4 h-4" /> },
+      { label: "Platform", value: "Loyalty & rewards", icon: <Award className="w-4 h-4" /> }
     ],
     challenges: [
       "Implemented comprehensive RTL (Right-to-Left) support for Arabic and Hebrew",
@@ -110,19 +102,17 @@ const apps: App[] = [
     name: "SafeTrek",
     description: "Wear OS application for personal safety with timed check-ins and automated escalation. Battery-efficient location tracking on wearables.",
     technologies: ["Kotlin", "Wear OS", "Location Services", "Background Services"],
-    rating: 4.7,
-    downloads: "100K+",
     features: ["Timed check-ins", "Location tracking", "Emergency alerts", "Wearable optimization"],
     playStoreUrl: "https://play.google.com/store/apps/details?id=com.safetrekapp.safetrek",
-    screenshot: "/assets/images/safetrek.webp",
+    screenshot: "/assets/images/safetrek.png",
     color: "orange",
     role: "Senior Android Developer",
     teamSize: "2 developers",
     timeline: "8 months",
     metrics: [
-      { label: "Battery Optimization", value: "60% improvement", icon: <TrendingUp className="w-4 h-4" /> },
-      { label: "Location Accuracy", value: "±5 meters", icon: <Award className="w-4 h-4" /> },
-      { label: "Emergency Response", value: "<30 seconds", icon: <Clock className="w-4 h-4" /> }
+      { label: "Platform", value: "Wear OS optimized", icon: <Award className="w-4 h-4" /> },
+      { label: "Safety Features", value: "Emergency alert system", icon: <TrendingUp className="w-4 h-4" /> },
+      { label: "Battery Efficiency", value: "24/7 location tracking", icon: <Clock className="w-4 h-4" /> }
     ],
     challenges: [
       "Optimized battery consumption for 24/7 location tracking on Wear OS",
@@ -136,25 +126,47 @@ const apps: App[] = [
     name: "Everytap",
     description: "Beacon-based loyalty platform enabling users to earn and redeem points when visiting venues. Optimized beacon scanning and Material Design UI.",
     technologies: ["Kotlin", "Bluetooth LE", "Beacons", "Material Design"],
-    rating: 4.8,
-    downloads: "250K+",
     features: ["iBeacon/Eddystone", "Rewards tracking", "Venue detection", "Custom animations"],
-    playStoreUrl: "#",
-    screenshot: "/assets/images/everytap.webp",
+    playStoreUrl: "https://play.google.com/store/apps/details?id=com.everytap&hl=en",
+    screenshot: "/assets/images/everytap.png",
     color: "red",
     role: "Lead Android Developer",
     teamSize: "3 developers",
     timeline: "14 months",
     metrics: [
-      { label: "Beacon Detection", value: "99% accuracy", icon: <Award className="w-4 h-4" /> },
-      { label: "Battery Impact", value: "<2% per day", icon: <TrendingUp className="w-4 h-4" /> },
-      { label: "Venue Coverage", value: "500+ locations", icon: <Users className="w-4 h-4" /> }
+      { label: "Technology", value: "Bluetooth LE beacons", icon: <Award className="w-4 h-4" /> },
+      { label: "Protocols", value: "iBeacon & Eddystone", icon: <TrendingUp className="w-4 h-4" /> },
+      { label: "Platform", value: "Loyalty & rewards", icon: <Users className="w-4 h-4" /> }
     ],
     challenges: [
       "Developed efficient Bluetooth LE scanning algorithm reducing battery drain by 80%",
       "Implemented iBeacon and Eddystone protocol support for cross-platform compatibility",
       "Built real-time venue detection with geofencing fallback",
       "Created smooth Material Design animations for reward notifications"
+    ]
+  },
+  {
+    id: 6,
+    name: "Inventrip",
+    description: "Travel platform providing contextual, location-based content to users before and during their trips. Features map-based discovery, curated routes, and offline access to travel information.",
+    technologies: ["Kotlin", "Bluetooth LE", "Realm Database", "RxJava", "Dagger 2", "MVVM"],
+    features: ["Location-based content", "BLE beacons", "Offline caching", "Map discovery"],
+    playStoreUrl: "https://play.google.com/store/apps/details?id=com.sismotur.inventrip&hl=en",
+    screenshot: "/assets/images/inventrip.png",
+    color: "orange",
+    role: "Senior Android Developer",
+    teamSize: "3 developers",
+    timeline: "6 months",
+    metrics: [
+      { label: "BLE Integration", value: "iBeacon & Eddystone", icon: <Award className="w-4 h-4" /> },
+      { label: "Architecture", value: "RxJava & Dagger 2", icon: <TrendingUp className="w-4 h-4" /> },
+      { label: "Offline Support", value: "Realm caching layer", icon: <Clock className="w-4 h-4" /> }
+    ],
+    challenges: [
+      "Implemented Bluetooth Low Energy integration using iBeacon and Eddystone protocols",
+      "Built background services for monitoring nearby beacons with battery optimization",
+      "Designed local caching layer using Realm for offline usage during travel",
+      "Refactored codebase with RxJava and Dagger 2 for improved maintainability"
     ]
   }
 ];
@@ -271,31 +283,26 @@ export default function AppsPortfolio() {
                 <img
                   src={app.screenshot}
                   alt={`${app.name} screenshot`}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-72 object-cover object-top"
                   loading="lazy"
                 />
-                <div className="p-6">
-                  <div className="mb-4">
-                    <div className={`h-12 w-12 ${colors.pill} rounded-full flex items-center justify-center ${colors.text} font-bold text-lg mb-3`}>
-                      {app.name.charAt(0)}
-                    </div>
-                    <h3 className={`text-xl font-bold ${colors.text} mb-2`}>{app.name}</h3>
-                    <p className={`text-sm mb-3 ${colors.descText}`}>{app.description}</p>
-                    
-                    {/* Role and Project Info */}
-                    <div className={`mb-3 pt-3 border-t ${theme === 'light' ? 'border-orange-100' : 'border-orange-900'}`}>
-                      <div className={`text-xs font-semibold mb-1 ${colors.text}`}>My Role</div>
-                      <div className={`text-xs ${colors.descText} mb-2`}>{app.role}</div>
+                <div className="p-5">
+                  <div className="mb-3">
+                    <div className="flex items-start justify-between mb-2">
+                      <div>
+                        <h3 className={`text-lg font-bold ${colors.text} mb-1`}>{app.name}</h3>
+                        <div className={`text-xs ${colors.descText} mb-2`}>{app.role}</div>
+                      </div>
                       {(app.teamSize || app.timeline) && (
-                        <div className="flex gap-3 text-xs">
+                        <div className="flex flex-col gap-1 text-xs text-right">
                           {app.teamSize && (
-                            <div className={`flex items-center gap-1 ${colors.featureText}`}>
+                            <div className={`flex items-center gap-1 justify-end ${colors.featureText}`}>
                               <Users className="w-3 h-3" />
                               <span>{app.teamSize}</span>
                             </div>
                           )}
                           {app.timeline && (
-                            <div className={`flex items-center gap-1 ${colors.featureText}`}>
+                            <div className={`flex items-center gap-1 justify-end ${colors.featureText}`}>
                               <Clock className="w-3 h-3" />
                               <span>{app.timeline}</span>
                             </div>
@@ -305,64 +312,37 @@ export default function AppsPortfolio() {
                     </div>
                   </div>
 
-                  {/* Metrics */}
+                  {/* Metrics - Compact */}
                   {app.metrics && app.metrics.length > 0 && (
-                    <div className="mb-4">
-                      <p className={`text-xs font-semibold mb-2 ${colors.text}`}>Key Achievements:</p>
-                      <div className="space-y-2">
+                    <div className="mb-3">
+                      <div className="grid grid-cols-1 gap-1.5">
                         {app.metrics.map((metric, idx) => (
-                          <div key={idx} className={`flex items-center gap-2 text-xs ${colors.featureText}`}>
-                            {metric.icon && <div className={colors.text}>{metric.icon}</div>}
-                            <span className="font-medium">{metric.label}:</span>
-                            <span className={`font-bold ${colors.text}`}>{metric.value}</span>
+                          <div key={idx} className={`flex items-center gap-1.5 text-xs ${colors.featureText}`}>
+                            {metric.icon && <div className={`${colors.text} flex-shrink-0`}>{metric.icon}</div>}
+                            <span className="truncate"><span className="font-medium">{metric.label}:</span> <span className={`font-semibold ${colors.text}`}>{metric.value}</span></span>
                           </div>
                         ))}
                       </div>
                     </div>
                   )}
 
-                  <div className="mb-4">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="flex">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className={`w-4 h-4 ${
-                              i < Math.floor(app.rating)
-                                ? 'fill-amber-400 text-amber-400'
-                                : theme === 'light' ? 'text-gray-300' : 'text-gray-600'
-                            }`}
-                          />
-                        ))}
-                      </div>
-                      <span className={`font-semibold text-sm ${theme === 'light' ? 'text-amber-600' : 'text-amber-500'}`}>{app.rating}</span>
-                      <span className={`text-sm ${theme === 'light' ? 'text-gray-600' : 'text-gray-500'}`}>({app.downloads})</span>
-                    </div>
-                  </div>
-
-                  <div className="mb-4">
-                    <div className="flex flex-wrap gap-2">
-                      {app.technologies.map((tech) => (
+                  {/* Technologies - Compact single line */}
+                  <div className="mb-3">
+                    <div className="flex flex-wrap gap-1.5">
+                      {app.technologies.slice(0, 4).map((tech) => (
                         <span
                           key={tech}
-                          className={`text-xs px-3 py-1 ${colors.pill} ${colors.text} rounded-full font-medium`}
+                          className={`text-[10px] px-2 py-0.5 ${colors.pill} ${colors.text} rounded-full font-medium`}
                         >
                           {tech}
                         </span>
                       ))}
+                      {app.technologies.length > 4 && (
+                        <span className={`text-[10px] px-2 py-0.5 ${colors.pill} ${colors.text} rounded-full font-medium`}>
+                          +{app.technologies.length - 4}
+                        </span>
+                      )}
                     </div>
-                  </div>
-
-                  <div className="mb-4">
-                    <p className={`text-xs font-semibold mb-2 ${colors.text}`}>Key Features:</p>
-                    <ul className="space-y-1">
-                      {app.features.map((feature) => (
-                        <li key={feature} className={`text-xs flex items-center ${colors.featureText}`}>
-                          <span className={`w-1.5 h-1.5 ${colors.text} rounded-full mr-2`}></span>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
                   </div>
 
                   {/* Technical Challenges - Expandable */}

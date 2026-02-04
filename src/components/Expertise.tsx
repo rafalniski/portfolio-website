@@ -14,17 +14,17 @@ export default function Expertise() {
     {
       icon: <Code className="w-8 h-8" />,
       title: "Architecture & Design",
-      skills: ["Clean Architecture", "MVVM", "PARCH Pattern", "Dependency Injection", "Unidirectional Data Flow"]
+      skills: ["Clean Architecture", "MVVM", "Dependency Injection", "Unidirectional Data Flow", "SOLID Principles"]
     },
     {
       icon: <Smartphone className="w-8 h-8" />,
       title: "Android Technologies",
-      skills: ["Jetpack Compose", "Coroutines", "Kotlin", "Java", "Android SDK", "Wear OS"]
+      skills: ["Kotlin", "Java", "Jetpack Compose", "Coroutines", "Android SDK"]
     },
     {
       icon: <Zap className="w-8 h-8" />,
-      title: "Real-Time Systems",
-      skills: ["WebSocket", "gRPC", "Bluetooth LE", "Location Services", "Background Services"]
+      title: "Real-Time & Communication",
+      skills: ["gRPC", "Location Services", "Bluetooth Low Energy (LE)", "WebSocket", "WorkManager"]
     },
     {
       icon: <Lock className="w-8 h-8" />,
@@ -34,12 +34,12 @@ export default function Expertise() {
     {
       icon: <Cpu className="w-8 h-8" />,
       title: "Hardware Integration",
-      skills: ["AOSP", "Android Automotive", "Bluetooth", "Display Synchronization", "Hardware Drivers"]
+      skills: ["Android Automotive", "AOSP", "NFC", "Camera API", "Sensor Integration"]
     },
     {
       icon: <Users className="w-8 h-8" />,
-      title: "Leadership & Quality",
-      skills: ["Unit Testing", "CI/CD", "Code Reviews", "Accessibility", "Documentation"]
+      title: "Testing & Quality",
+      skills: ["Unit Testing", "CI/CD", "Test Automation", "Accessibility", "Performance Optimization"]
     }
   ];
 

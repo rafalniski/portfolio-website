@@ -2,9 +2,18 @@ import { Check } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { CONTACT_INFO, PROFESSIONAL_INFO } from '../config/constants';
 import { trackCTA } from '../config/analytics';
+import { useClientLocation } from '../hooks/useClientLocation';
 
 export default function Hero() {
   const { theme } = useTheme();
+  const { isUS, loading: locationLoading } = useClientLocation();
+
+  // Determine timezone message based on client location
+  const getTimezoneMessage = () => {
+    if (locationLoading) return CONTACT_INFO.timezone;
+    if (isUS) return 'Available EST hours';
+    return 'Available CET'; // Rest of the world
+  };
 
   return (
     <section className={`min-h-screen flex items-center justify-center pt-32 pb-20 transition-colors duration-300 ${
@@ -43,11 +52,16 @@ export default function Hero() {
           Building Android Apps That Scale
         </h1>
 
-        <h2 className={`text-2xl sm:text-3xl font-semibold mb-6 transition-colors ${
+        <h2 className={`text-2xl sm:text-3xl font-semibold mb-4 transition-colors ${
           theme === 'light' ? 'text-orange-700' : 'text-orange-500'
         }`}>
-          {PROFESSIONAL_INFO.yearsExperience}+ Years Crafting Production-Ready Applications
+          Freelance Android Developer
         </h2>
+        <p className={`text-lg sm:text-xl mb-6 transition-colors ${
+          theme === 'light' ? 'text-gray-600' : 'text-gray-400'
+        }`}>
+          {PROFESSIONAL_INFO.yearsExperience}+ Years Crafting Production-Ready Applications
+        </p>
 
         <p className={`text-xl mb-8 max-w-3xl mx-auto leading-relaxed transition-colors ${
           theme === 'light' ? 'text-gray-700' : 'text-gray-300'
@@ -70,7 +84,7 @@ export default function Hero() {
           </div>
           <div className="flex items-center gap-2">
             <Check className={`w-5 h-5 ${theme === 'light' ? 'text-orange-600' : 'text-orange-500'}`} />
-            <span className="text-sm font-medium">{CONTACT_INFO.timezone}</span>
+            <span className="text-sm font-medium">{getTimezoneMessage()}</span>
           </div>
         </div>
 
