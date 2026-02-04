@@ -34,14 +34,21 @@
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      
+      // Initialize immediately
       gtag('js', new Date());
+      
+      // Configure with explicit settings
       gtag('config', 'G-FRMQCJ4LLV', {
         page_path: window.location.pathname + window.location.search,
-        send_page_view: true
+        page_location: window.location.href,
+        send_page_view: true,
+        cookie_flags: 'SameSite=None;Secure'
       });
       
       // Debug: Log when GA is initialized
       console.log('Google Analytics initialized with ID: G-FRMQCJ4LLV');
+      console.log('Page location:', window.location.href);
       
       // Verify gtag is available
       if (typeof gtag === 'function') {
@@ -49,6 +56,15 @@
       } else {
         console.error('✗ gtag function is NOT available');
       }
+      
+      // Verify script loaded
+      window.addEventListener('load', function() {
+        if (window.dataLayer && window.dataLayer.length > 0) {
+          console.log('✓ Google Analytics script loaded, dataLayer:', window.dataLayer);
+        } else {
+          console.error('✗ Google Analytics script may not have loaded');
+        }
+      });
     </script>
     
     <!-- Structured Data -->
