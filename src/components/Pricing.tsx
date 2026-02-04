@@ -22,14 +22,14 @@ export default function Pricing() {
   useEffect(() => {
     const fetchPricingData = async () => {
       try {
-        // Use ip-api.com which supports CORS (free tier: 45 requests/minute)
-        const geoResponse = await fetch('https://ip-api.com/json/?fields=countryCode,country', {
+        // Use reallyfreegeoip.org (no API key, no rate limits, CORS enabled)
+        const geoResponse = await fetch('https://reallyfreegeoip.org/json/', {
           method: 'GET'
         });
         
         if (geoResponse.ok) {
           const geoData = await geoResponse.json();
-          const country = geoData.countryCode;
+          const country = geoData.country_code;
           const isEU = isEUCountry(country);
 
           let currency = 'USD';
@@ -49,7 +49,7 @@ export default function Pricing() {
           setPricing({
             currency,
             rate: conversionRate,
-            country: geoData.country || geoData.countryCode || null,
+            country: geoData.country_name || geoData.country_code || null,
             loading: false,
           });
           return;

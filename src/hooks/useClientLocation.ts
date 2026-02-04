@@ -16,14 +16,14 @@ export function useClientLocation(): LocationData {
   useEffect(() => {
     const fetchLocation = async () => {
       try {
-        // Use ip-api.com which supports CORS (free tier: 45 requests/minute)
-        const response = await fetch('https://ip-api.com/json/?fields=countryCode', {
+        // Use reallyfreegeoip.org (no API key, no rate limits, CORS enabled)
+        const response = await fetch('https://reallyfreegeoip.org/json/', {
           method: 'GET',
         });
 
         if (response.ok) {
           const data = await response.json();
-          const countryCode = data.countryCode;
+          const countryCode = data.country_code;
 
           if (countryCode) {
             const usCountries = ['US', 'CA', 'MX']; // US, Canada, Mexico
