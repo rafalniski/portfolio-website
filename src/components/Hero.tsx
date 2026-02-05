@@ -43,7 +43,7 @@ export default function Hero() {
         </div>
 
         <h1 className={`text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 transition-colors ${
-          theme === 'light' ? 'text-gray-900' : 'text-white'
+          theme === 'light' ? 'text-orange-700' : 'text-orange-500'
         }`}>
           Freelance Android Developer for Production‑Ready Kotlin Apps
         </h1>
